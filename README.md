@@ -1,12 +1,23 @@
-# WaitingForC3
+# MastodonBots
 
-A small Mastodon bot created by me.
+A few Mastodon bot created by me.
 
-The bot is currently active [over here](https://botsin.space/@waitingforC3).
+The bots can be found here:
+- [whatthecommit](https://botsin.space/@whatthecommit)
+- [waitingforc3](https://botsin.space/@waitingforC3)
 
-Frequent execution of the bot is done via a cron job, 12.00 each day
+Frequent execution of the bots is done via cron jobs
 
 ## ToDo
 
+### waitingforc3
+
 - [ ] Add multiple announcement texts for "regular" days until c3 event
 - [ ] Add multiple texts for days during c3
+- [ ] Create Avatar
+- [ ] Create Header
+
+### whatthecommit
+
+- [ ] Create Avatar
+- [ ] Create Header
