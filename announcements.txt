@@ -1,2 +1,0 @@
-"Hey, did you know? " + hashtag + " is only " + dayUntilTheDay + " away!"
-"Have you heard the good word of our lord and savior " + hashtag + "? \nHis arrival shall be " + daysUntilTheDay + " days from now!" 
