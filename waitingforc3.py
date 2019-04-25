@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from mastodon import Mastodon
 import time
 import datetime
