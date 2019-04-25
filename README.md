@@ -15,13 +15,13 @@ Frequent execution of the bots is done via cron jobs
 
 - [ ] Add multiple announcement texts for "regular" days until c3 event
 - [ ] Add multiple texts for days during c3
-- [ ] Create Avatar
-- [ ] Create Header
+- [x] Create Avatar
+- [x] Create Header
 
 ### whatthecommit
 
-- [ ] Create Avatar
-- [ ] Create Header
+- [x] Create Avatar
+- [x] Create Header
 
 ### stoerungsmelder
 
