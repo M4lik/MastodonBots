@@ -2,7 +2,9 @@
 
 from mastodon import Mastodon
 import urllib.request
+import os
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 mastodon = Mastodon(
     access_token = 'whatthecommit.secret',  # File for "Your access token", can be created unter "Settings" -> "Development" -> "Your applications"
     api_base_url = 'https://botsin.space'   # URL that the bot is hosted on

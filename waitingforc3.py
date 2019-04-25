@@ -3,7 +3,9 @@
 from mastodon import Mastodon
 import time
 import datetime
+import os
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 mastodon = Mastodon(
     access_token = 'waitingforc3.secret',   # File for "Your access token", can be created unter "Settings" -> "Development" -> "Your applications"
     api_base_url = 'https://botsin.space'   # URL that the bot is hosted on
