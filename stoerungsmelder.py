@@ -31,7 +31,6 @@ def tweetTooter(parentTweet):
     thisTweet = tweet(parentTweet.tweet.find_next('div', attrs={'class':'tweet'}))
     if thisTweet.success() and lastTootTime < thisTweet.time():
         tweetTooter(thisTweet)
-        #print('%i: %s',thisTweet.time(),thisTweet.content())
         mastodon.status_post(thisTweet.content())
         lastTootTime = thisTweet.time()
     else:
@@ -45,10 +44,10 @@ if __name__ == "__main__":
     parsed_html = BeautifulSoup(twitter, features="html.parser")
     firstTweet = tweet(parsed_html.body.find('div', attrs={'class':'tweet'}))
     try:
-        lastTootTime = pickle.load(open("./lastTootTime", 'rb'))
+        lastTootTime = pickle.load(open("./lastTootTime.log", 'rb'))
     except:
         print("Time-file does not exist. Creating one.")
         lastTootTime = _time.time()
-        pickle.dump(lastTootTime, open("./lastTootTime", 'wb'))
+        pickle.dump(lastTootTime, open("./lastTootTime.log", 'wb'))
     tweetTooter(firstTweet)
-    pickle.dump(lastTootTime, open("./lastTootTime", 'wb'))
+    pickle.dump(lastTootTime, open("./lastTootTime.log", 'wb'))
