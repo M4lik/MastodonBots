@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import time as _time
 import pickle
 from mastodon import Mastodon
+import os
 
 mastodon = Mastodon(
     access_token = 'stoerungsmelder.secret',   # File for "Your access token", can be created unter "Settings" -> "Development" -> "Your applications"
@@ -28,7 +29,7 @@ class tweet:
 def tweetTooter(parentTweet):
     global lastTootTime
     thisTweet = tweet(parentTweet.tweet.find_next('div', attrs={'class':'tweet'}))
-    if thisTweet.success and lastTootTime < thisTweet.time():
+    if thisTweet.success() and lastTootTime < thisTweet.time():
         tweetTooter(thisTweet)
         #print('%i: %s',thisTweet.time(),thisTweet.content())
         mastodon.status_post(thisTweet.content())
@@ -38,6 +39,7 @@ def tweetTooter(parentTweet):
 
 
 if __name__ == "__main__":
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     URL = 'https://twitter.com/stoerungsmelder'
     twitter = urllib.request.urlopen(URL).read().decode('utf-8').rstrip()
     parsed_html = BeautifulSoup(twitter, features="html.parser")
