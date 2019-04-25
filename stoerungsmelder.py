@@ -6,6 +6,7 @@ import time as _time
 import pickle
 from mastodon import Mastodon
 import os
+import re
 
 mastodon = Mastodon(
     access_token = 'stoerungsmelder.secret',   # File for "Your access token", can be created unter "Settings" -> "Development" -> "Your applications"
@@ -15,11 +16,14 @@ lastTootTime = 0
 
 class tweet:
     def time(self):
-        return int(self.tweet.find('span',attrs={'class','_timestamp'})['data-time'])
+        return int(self.tweet.find('span', attrs={'class','_timestamp'})['data-time'])
 
     def content(self):
         return self.tweet.find('p', attrs={'class','tweet-text'}).text
     
+    def media(self):
+        return self.tweet.find_all('img', attrs={'img',r'https:\/\/pbs.twimg.com\/media\/.+'}) #and not self.tweet.find_all('img', attrs={'class','avatar'})
+
     def success(self):
         return True if type(self.tweet) == type(BeautifulSoup('<b/>',features="html.parser").b) else False
 
@@ -39,15 +43,19 @@ def tweetTooter(parentTweet):
 
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    URL = 'https://twitter.com/stoerungsmelder'
+    URL = 'https://twitter.com/stoerungsmelder/media'
     twitter = urllib.request.urlopen(URL).read().decode('utf-8').rstrip()
     parsed_html = BeautifulSoup(twitter, features="html.parser")
     firstTweet = tweet(parsed_html.body.find('div', attrs={'class':'tweet'}))
+    print(firstTweet.media())
+    '''
     try:
         lastTootTime = pickle.load(open("./lastTootTime.log", 'rb'))
     except:
         print("Time-file does not exist. Creating one.")
         lastTootTime = _time.time()
         pickle.dump(lastTootTime, open("./lastTootTime.log", 'wb'))
+    
     tweetTooter(firstTweet)
     pickle.dump(lastTootTime, open("./lastTootTime.log", 'wb'))
+    '''
