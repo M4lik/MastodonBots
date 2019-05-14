@@ -7,6 +7,7 @@ import pickle
 from mastodon import Mastodon
 import os
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 mastodon = Mastodon(
     access_token = 'stoerungsmelder.secret',   # File for "Your access token", can be created unter "Settings" -> "Development" -> "Your applications"
     api_base_url = 'https://botsin.space'   # URL that the bot is hosted on
@@ -19,7 +20,7 @@ class tweet:
 
     def content(self):
         return self.tweet.find('p', attrs={'class','tweet-text'}).text
-    
+
     def success(self):
         return True if type(self.tweet) == type(BeautifulSoup('<b/>',features="html.parser").b) else False
 
@@ -38,7 +39,6 @@ def tweetTooter(parentTweet):
 
 
 if __name__ == "__main__":
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     URL = 'https://twitter.com/stoerungsmelder'
     twitter = urllib.request.urlopen(URL).read().decode('utf-8').rstrip()
     parsed_html = BeautifulSoup(twitter, features="html.parser")
