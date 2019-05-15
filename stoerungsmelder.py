@@ -27,11 +27,11 @@ class tweet:
     def __init__(self, body):
         self.tweet = body
 
-def tweetTooter(parentTweet):
+def tweetTooter(thisTweet):
     global lastTootTime
-    thisTweet = tweet(parentTweet.tweet.find_next('div', attrs={'class':'tweet'}))
+    nextTweet = tweet(thisTweet.tweet.find_next('div', attrs={'class':'tweet'}))
     if thisTweet.success() and lastTootTime < thisTweet.time():
-        tweetTooter(thisTweet)
+        tweetTooter(nextTweet)
         mastodon.status_post(thisTweet.content())
         lastTootTime = thisTweet.time()
     else:
