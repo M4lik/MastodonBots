@@ -1,6 +1,6 @@
 # MastodonBots
 
-A few Mastodon bot created by me.
+A few Mastodon bots created by me.
 
 The bots can be found here:
 - [whatthecommit](https://botsin.space/@whatthecommit)
