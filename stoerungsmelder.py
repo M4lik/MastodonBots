@@ -20,7 +20,9 @@ class tweet:
         return int(self.tweet.find('span', attrs={'class','_timestamp'})['data-time'])
 
     def content(self):
-        return self.tweet.find('p', attrs={'class','tweet-text'}).text
+        out = self.tweet.find('p', attrs={'class', 'tweet-text'})
+        out.a.decompose()
+        return out.text
 
     def media(self):
         media = self.tweet.find_all('div', attrs={'class', 'AdaptiveMedia-photoContainer'})
@@ -39,21 +41,25 @@ def tweetTooter(thisTweet):
     nextTweet = tweet(thisTweet.tweet.find_next('div', attrs={'class':'tweet'}))
     if thisTweet.success() and lastTootTime < thisTweet.time():
         tweetTooter(nextTweet)
-        if not thisTweet.media:
-            mastodon.status_post(thisTweet.content())
+        if thisTweet.media():
+            mediaPost = []
+            for i in range(len(thisTweet.media())):
+                mediaPost.append(mastodon.media_post(urllib.request.urlopen(thisTweet.media()[i]).read(), "image/jpeg"))
+                mastodon.status_post(thisTweet.content(), media_ids=mediaPost)
         else:
+            mastodon.status_post(thisTweet.content())
         lastTootTime = thisTweet.time()
     else:
         return
 
 
 if __name__ == "__main__":
-    URL = 'https://twitter.com/stoerungsmelder'
+    URL = 'https://twitter.com/stoerungsmelder/media'
+    #URL = 'https://twitter.com/stoerungsmelder'
     twitter = urllib.request.urlopen(URL).read().decode('utf-8').rstrip()
     parsed_html = BeautifulSoup(twitter, features="html.parser")
     firstTweet = tweet(parsed_html.body.find('div', attrs={'class':'tweet'}))
-    print(type(firstTweet.media()))
-    '''
+    tweetTooter(firstTweet)
     try:
         lastTootTime = pickle.load(open("./lastTootTime.log", 'rb'))
     except:
@@ -63,4 +69,3 @@ if __name__ == "__main__":
 
     tweetTooter(firstTweet)
     pickle.dump(lastTootTime, open("./lastTootTime.log", 'wb'))
-    '''
