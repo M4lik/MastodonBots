@@ -21,7 +21,10 @@ class tweet:
 
     def content(self):
         out = self.tweet.find('p', attrs={'class', 'tweet-text'})
-        out.a.decompose()
+        try:
+            out.a.decompose()
+        except:
+            pass
         return out.text
 
     def media(self):
@@ -38,9 +41,8 @@ class tweet:
 
 def tweetTooter(thisTweet):
     global lastTootTime
-    nextTweet = tweet(thisTweet.tweet.find_next('div', attrs={'class':'tweet'}))
     if thisTweet.success() and lastTootTime < thisTweet.time():
-        tweetTooter(nextTweet)
+        tweetTooter(tweet(thisTweet.tweet.find_next('div', attrs={'class': 'tweet'})))
         if thisTweet.media():
             mediaPost = []
             for i in range(len(thisTweet.media())):
@@ -54,12 +56,11 @@ def tweetTooter(thisTweet):
 
 
 if __name__ == "__main__":
-    URL = 'https://twitter.com/stoerungsmelder/media'
-    #URL = 'https://twitter.com/stoerungsmelder'
+    #URL = 'https://twitter.com/stoerungsmelder/media'
+    URL = 'https://twitter.com/stoerungsmelder'
     twitter = urllib.request.urlopen(URL).read().decode('utf-8').rstrip()
     parsed_html = BeautifulSoup(twitter, features="html.parser")
-    firstTweet = tweet(parsed_html.body.find('div', attrs={'class':'tweet'}))
-    tweetTooter(firstTweet)
+    firstTweet = tweet(parsed_html.body.find('div', attrs={'class': 'tweet'}))
     try:
         lastTootTime = pickle.load(open("./lastTootTime.log", 'rb'))
     except:
