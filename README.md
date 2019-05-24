@@ -5,7 +5,7 @@ A few Mastodon bots created by me.
 The bots can be found here:
 - [whatthecommit](https://botsin.space/@whatthecommit)
 - [waitingforc3](https://botsin.space/@waitingforC3)
-- [stoerungsmelder](https://botsin.space/stoerungsmelder)
+- [stoerungsmelder](https://botsin.space/@stoerungsmelder)
 
 Frequent execution of the bots is done via cron jobs
 
